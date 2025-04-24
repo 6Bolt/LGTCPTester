@@ -2,16 +2,19 @@ cmake_minimum_required(VERSION 3.19)
 project(LGTCPTester LANGUAGES CXX)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Network)
 
 qt_standard_project_setup()
 
 qt_add_executable(LGTCPTester
     main.cpp
+    TCPSocket.h TCPSocket.cpp
 )
 
 target_link_libraries(LGTCPTester
     PRIVATE
         Qt::Core
+        Qt6::Network
 )
 
 include(GNUInstallDirs)
