@@ -1,9 +1,5 @@
 #include <QCoreApplication>
-#include <QFile>
-#include <QTextStream>
-#include <QTimer>
-#include <QByteArray>
-#include <QThread>
+
 
 #include "TCPSocket.h"
 
@@ -28,7 +24,6 @@ int main(int argc, char *argv[])
     // to a.exec() or use the Non-Qt Plain C++ Application template.
 
     bool isLogFile = false;
-    bool isArguments = false;
     QString logFile = "log.txt";
     QStringList arguments;
 
@@ -55,7 +50,10 @@ int main(int argc, char *argv[])
             else if(arguments[i] == "-n")
             {
                 if(arguments.count() > i+1)
+                {
                     logFile = arguments[i+1];
+                    isLogFile = true;
+                }
                 else
                 {
                     qDebug() << "No name for log file for -n option. Quitting the program";
@@ -79,9 +77,12 @@ int main(int argc, char *argv[])
 
 void ShowHelp()
 {
+    qDebug() << "v1.1 of LGTCPTester";
     qDebug() << "LGTCPTester or LGTCPTester -options";
     qDebug() << "Options";
     qDebug() << "-h: Shows Help Info, which is this. Also doesn't run program and quits.";
-    qDebug() << "-l: Log Output Signals to a Log File. Default Log File is log.txt, unless the -n option is used.";
-    qDebug() << "-n follwed with file name: Names the Log file. Example: -n gameX.txt";
+    qDebug() << "-l: Logs Output Signals to a Log File. Default Log File is log.txt, unless the -n option is used.";
+    qDebug() << "-n follwed with file name: Re-Names the Log file & Enables Logging. Example: -n gameX.txt";
+    qDebug() << "Stop Program";
+    qDebug() << "CNTRL-C: To stop the program";
 }

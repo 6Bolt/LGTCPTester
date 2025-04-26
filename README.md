@@ -9,3 +9,17 @@ To fix this, I created this tool. Now a person can run everything, except Hook O
 
 If the Output Signals are toggling during the game, then it could be a bug for Hook Of The Reaper. It depends if the game file is set-up correctly, or not. As Hook Of The Reaper loads the game file, to know what Output Signals to observre, and do actions for. If the game file is not correct, and then needs to be updated. If the game file is correct, then it might be a bug with Hook Of The Reaper. 
 
+## Run Program
+
+Display Output Signals
+> .\LGTCPTester.exe 
+
+Display & Log Output Signals to 'log.txt'
+> .\LGTCPTester.exe -l
+
+Display & Log Output Signals to Certain Log File
+> .\LGTCPTester.exe -n nameOfLogFile.txt
+
+Version & Help Info
+> .\LGTCPTester.exe -h
+
