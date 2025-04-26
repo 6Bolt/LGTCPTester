@@ -9,6 +9,7 @@ qt_standard_project_setup()
 qt_add_executable(LGTCPTester
     main.cpp
     TCPSocket.h TCPSocket.cpp
+    ../README.md
 )
 
 target_link_libraries(LGTCPTester
