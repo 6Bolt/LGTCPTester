@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
 
 void ShowHelp()
 {
-    qDebug() << "v1.1 of LGTCPTester";
+    qDebug() << "v1.2 of LGTCPTester";
     qDebug() << "LGTCPTester or LGTCPTester -options";
     qDebug() << "Options";
     qDebug() << "-h: Shows Help Info, which is this. Also doesn't run program and quits.";
