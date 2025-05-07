@@ -9,6 +9,7 @@
 #include <QDebug>
 #include <QRegularExpression>
 #include <QTimer>
+#include <QElapsedTimer>
 
 
 class TCPSocket : public QObject
@@ -56,6 +57,11 @@ private:
 
     //Timer
     QTimer *p_waitingForConnection;
+
+    //Elapse Timer
+    QElapsedTimer *p_elapseTimer;
+
+    qint64 elapseTime;
 
 
     //read Data

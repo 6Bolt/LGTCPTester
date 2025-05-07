@@ -16,6 +16,10 @@ TCPSocket::TCPSocket(bool lgF, QString logFN, QObject *parent)
     connect(p_hookSocket,SIGNAL(connected()), this, SLOT(SocketConnected()));
     connect(p_hookSocket,SIGNAL(disconnected()), this, SLOT(SocketDisconnected()));
 
+
+    p_elapseTimer = new QElapsedTimer();
+    p_elapseTimer->start ();
+
     //If Using Log File, then Open it and Set-Up QTextStream
     if(isLogFile)
     {
@@ -60,7 +64,14 @@ TCPSocket::~TCPSocket()
 
 void TCPSocket::Connect()
 {
-    qDebug() << "Waiting for a TCP Connection";
+    elapseTime = p_elapseTimer->elapsed ();
+
+    qDebug() << "Waiting for a TCP Connection           Time: " << elapseTime;
+
+    if(isLogFile)
+    {
+        out << "Waiting for a TCP Connection           Time: " << elapseTime << "\n";
+    }
 
     //Set the Address for the TCP Socket
     p_hookSocket->connectToHost ("localhost", 8000);
@@ -108,16 +119,25 @@ void TCPSocket::TCPReadData()
 
     for(quint8 x = 0; x < tcpSocketReadData.count(); x++)
     {
-        qDebug() << tcpSocketReadData[x];
+        if(tcpSocketReadData[x].startsWith("mame_start") && tcpSocketReadData[x] != "mame_start = ___empty")
+            p_elapseTimer->restart ();
+
+        elapseTime = p_elapseTimer->elapsed ();
+
+        qDebug() << tcpSocketReadData[x] << "   Time: " << elapseTime;
 
         if(isLogFile)
         {
-            out << tcpSocketReadData[x] << "\n";
+            out << tcpSocketReadData[x] << "   Time: " << elapseTime << "\n";
         }
     }
 
     if(isLogFile)
         out.flush ();
+
+
+
+
 
 }
 
@@ -126,24 +146,26 @@ void TCPSocket::SocketConnected()
     p_waitingForConnection->stop ();
 
     isConnected = true;
+    elapseTime = p_elapseTimer->elapsed ();
 
-    qDebug() << "TCP Socket is Connected";
+    qDebug() << "TCP Socket is Connected        Time: " << elapseTime;
 
     if(isLogFile)
     {
-        out << "TCP Socket is Connected\n";
+        out << "TCP Socket is Connected         Time: " << elapseTime << "\n";
     }
 }
 
 void TCPSocket::SocketDisconnected()
 {
     isConnected = false;
+    elapseTime = p_elapseTimer->elapsed ();
 
-    qDebug() << "TCP Socket has been Disconnected";
+    qDebug() << "TCP Socket has been Disconnected           Time: " << elapseTime;
 
     if(isLogFile)
     {
-        out << "TCP Socket has been Disconnected\n";
+        out << "TCP Socket has been Disconnected            Time: " << elapseTime << "\n";
     }
 
     Connect();
